@@ -3,6 +3,7 @@ package com.example.Auction.controllers;
 import com.example.Auction.domain.Auction;
 import com.example.Auction.domain.User;
 import com.example.Auction.repos.AuctionRepo;
+import com.example.Auction.service.FormatDateTimeMethodModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -26,7 +27,6 @@ public class MainController {
     @Autowired
     private AuctionRepo auctionRepo;
 
-
     @GetMapping("/")
     public String startPage(Map<String, Object> model) {
         return "home";
@@ -36,6 +36,7 @@ public class MainController {
     @GetMapping("/main")
     public String main(Map<String, Object> model) {
         model.put("auctions", auctionRepo.findAll());
+        model.put("timeFormatter", new FormatDateTimeMethodModel());
         return "main";
     }
 

@@ -1,6 +1,9 @@
 package com.example.Auction.domain;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -12,6 +15,8 @@ import java.util.Set;
 
 @Entity
 @Data
+@EqualsAndHashCode(exclude = "participants")
+@ToString(exclude = "participants")
 public class Auction {
 
     @Id
@@ -29,11 +34,12 @@ public class Auction {
 //    @Transient
 //    private List<String> tags;
     private AuctionStatus auctionStatus;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime beginningAuctionTime;
     private boolean privateAuction;
     private String description;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "auction_participants",
             joinColumns = {@JoinColumn(name = "auction_id")},

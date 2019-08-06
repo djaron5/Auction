@@ -5,7 +5,7 @@
 
     <div class="columns">
         <#list auctions as auction>
-            <div class="auction my-3 container">
+            <div class="auction my-3 container border border-secondary">
                 <div class="row justify-content-center">
                     <div class="col-4">
                     <span class="m-1 col-sm">
@@ -18,21 +18,19 @@
                         </i>
                     </div>
                 </div>
-                <div class="row justify-content-start">
+                <div class="media m-3">
                     <#if auction.filename??>
-                        <div class="col-3">
-                            <img src="/img/${auction.filename}">
-                        </div>
+                                <img src="/img/${auction.filename}" class="img-fluid">
                     </#if>
                     <#if auction.description??>
-                        <div class="col-5">
-                            <label>${auction.description}</label>
+                        <div class="media-body ml-4" style="overflow: auto; max-height: 200px">
+                            <p>${auction.description}</p>
                         </div>
                     </#if>
                 </div>
                 <div class="row justify-content-between">
-                    <div class="col-4">
-                        Starts at: ${auction.beginningAuctionTime}
+                    <div class="col-4 ml-4">
+                        Starts at: ${timeFormatter((auction.beginningAuctionTime), 'yyyy-MM-dd HH:mm:ss')}
                     </div>
                     <div class="col-4">
                         <strong>Author: ${auction.owner.username}</strong>

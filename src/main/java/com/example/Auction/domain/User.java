@@ -1,6 +1,8 @@
 package com.example.Auction.domain;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +18,8 @@ import java.util.Set;
 @Entity
 @Table(name = "usr")
 @Data
+@EqualsAndHashCode(exclude = "subscriptions")
+@ToString(exclude = "subscriptions")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -41,7 +45,7 @@ public class User implements UserDetails {
     private String email;
     private String activationCode;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "auction_participants",
             joinColumns = {@JoinColumn(name = "user_id")},

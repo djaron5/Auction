@@ -40,7 +40,7 @@
         <input type="hidden" name="_csrf" value="${_csrf.token}">
         <div class="form-group row">
             <div class="col-sm-10">
-                <button type="submit" class="btn btn-primary">Sign in</button>
+                <button type="submit" class="btn btn-primary"><#if !isRegisterForm>Sign in <#else>Sign up</#if></button>
             </div>
         </div>
         <#if !isRegisterForm>
@@ -53,6 +53,13 @@
 <#macro logout>
     <form action="/logout" method="post">
         <button class="btn btn-primary" type="submit">Log out</button>
+        <input type="hidden" name="_csrf" value="${_csrf.token}">
+    </form>
+</#macro>
+
+<#macro login_button>
+    <form action="/login" method="get">
+        <button class="btn btn-primary" type="submit">Log in</button>
         <input type="hidden" name="_csrf" value="${_csrf.token}">
     </form>
 </#macro>

@@ -1,6 +1,7 @@
 package com.example.Auction.controllers;
 
 import com.example.Auction.domain.Auction;
+import com.example.Auction.domain.AuctionStatus;
 import com.example.Auction.domain.User;
 import com.example.Auction.repos.AuctionRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,7 @@ public class CreateAuctionController {
             Model model,
             @RequestParam("file") MultipartFile file) throws IOException {
         auction.setOwner(user);
+        System.out.println(auction.isPrivateAuction());
 
         if (bindingResult.hasErrors()) {
             Map<String, String> errorMap = ControllerUtils.getErrors(bindingResult);
@@ -65,7 +67,8 @@ public class CreateAuctionController {
 
                 auction.setFilename(resultFileName);
             }
-            auction.setBeginningAuctionTime(LocalDateTime.now());
+            auction.setAuctionStatus(AuctionStatus.ASSIGNED);
+            auction.setBeginningAuctionTime(LocalDateTime.now().plusMinutes(1));
             auction.setPrivateAuction(false);
             auctionRepo.save(auction);
 
